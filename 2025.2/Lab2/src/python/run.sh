@@ -29,5 +29,5 @@ else
     exit 1
 fi
 
-time python3 "$FILE" "$QTD_TURMAS" "$QTD_ALUNOS"
+time python "$FILE" "$QTD_TURMAS" "$QTD_ALUNOS"
 

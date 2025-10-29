@@ -66,13 +66,24 @@ class Classes:
         professor = self.professors[(class_id - 1) % len(self.professors) + 1]
         their_alumni = self.get_students_in_class(class_id)
 
+        best = 0
+        for student_id in their_alumni:
+            final_grade = self.semester_registry[student_id]['final_grade']
+            if final_grade is not None:
+                grade = float(final_grade)
+                if grade > best:
+                    best = grade
+
         print(f"\n*********** {professor}'s Class {class_id} ***********")
         for student_id in their_alumni:
             print(
                 f"student_id: {student_id}, "
                 f"class_id: {class_id}, "
                 f"final_grade: {self.semester_registry[student_id]['final_grade']}"
+                
             )
+
+        print(f"Best grade in class {class_id}: {best:0.2f}")
 
 
 if __name__ == "__main__":
@@ -93,7 +104,10 @@ if __name__ == "__main__":
     for class_id in semester.class_ids:
         t = threading.Thread(target=semester.process_grades, args=(class_id,))
         threads.append(t)
-    
+
+    for t in threads:
+        t.start()
+
     for t in threads:
         t.join()
 

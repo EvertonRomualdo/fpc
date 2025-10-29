@@ -6,6 +6,8 @@
 #include <sys/time.h>
 #include <pthread.h>
 
+//Devido a problemas de compatibilidade na plataforma Windows, a biblioteca pthread não pode ser usado por isso o exercicio não foi feito.
+
 #define MAX_STUDENTS 10000
 #define MAX_CLASSES 100
 
