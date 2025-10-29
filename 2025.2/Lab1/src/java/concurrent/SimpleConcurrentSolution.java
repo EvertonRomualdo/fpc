@@ -8,14 +8,18 @@ public class SimpleConcurrentSolution {
     private static class ResourceCheckTask implements Runnable {
         
         private static final Random random = new Random();
+        private  int i;
 
+        public ResourceCheckTask(int number) {
+            i = number;
+            
+        }
         @Override
         public void run() {
             Thread currentThread = Thread.currentThread();
 
             System.out.println("[" + currentThread.getName() + "] INÍCIO: Verificação de Recursos.");
 
-            for (int i = 1; i <= 5; i++) {
                 try {
                     // Gera um valor aleatório entre 1000ms (1s) e 3000ms (3s)
                     int sleepTime = 1000 + random.nextInt(2000); 
@@ -26,7 +30,7 @@ public class SimpleConcurrentSolution {
                     Thread.currentThread().interrupt();
                     return;
                 }
-            }
+            
             System.out.println("[" + currentThread.getName() + "] FIM: Verificação concluída.");
         }
     }
@@ -57,15 +61,27 @@ public class SimpleConcurrentSolution {
         System.out.println("[" + currentThread.getName() + "] --- INÍCIO DO PROGRAMA JAVA ---");
 
         // Criação das instâncias
-        ResourceCheckTask checkInstance = new ResourceCheckTask(); 
+        ResourceCheckTask checkInstance1 = new ResourceCheckTask(1);
+        ResourceCheckTask checkInstance2 = new ResourceCheckTask(2);
+        ResourceCheckTask checkInstance3 = new ResourceCheckTask(3);
+        ResourceCheckTask checkInstance4 = new ResourceCheckTask(4);
+        ResourceCheckTask checkInstance5 = new ResourceCheckTask(5);
 
         // Criação e Início das Threads
         Thread tLogs = new Thread(logSetupTask); //, "Setup-Logs");
-        Thread tCheck = new Thread(checkInstance); //, "Check-Recursos");
+        Thread tCheck1 = new Thread(checkInstance1); //, "Check-Recursos");
+        Thread tCheck2 = new Thread(checkInstance2);
+        Thread tCheck3 = new Thread(checkInstance3);
+        Thread tCheck4 = new Thread(checkInstance4);
+        Thread tCheck5 = new Thread(checkInstance5);
 
         // Início da execução concorrente
         tLogs.start();
-        tCheck.start();
+        tCheck1.start();
+        tCheck2.start();
+        tCheck3.start();
+        tCheck4.start();
+        tCheck5.start();
 
         System.out.println("[" + currentThread.getName() + "] Inicialização de tarefas concorrentes solicitada.");
 
